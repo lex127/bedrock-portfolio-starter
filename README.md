@@ -1,25 +1,29 @@
 # Bedrock Portfolio Starter
 
-A WordPress portfolio/resume site built on [Roots Bedrock](https://roots.io/bedrock/). Multilingual (EN/RU/UK/ES via Polylang), Docker-ready, fully customizable through WP Admin — no code changes required to make it your own.
+A WordPress portfolio/resume site built and used in production by [Oleksii Siniaiev](https://alexsinyaev.com). Multilingual (EN/RU/UK/ES via Polylang), Docker-ready, fully customizable through WP Admin — no code changes required to make it your own.
 
-## Stack
+> **Live example:** [alexsinyaev.com](https://alexsinyaev.com) — this starter powers that site.
 
-- WordPress 6.9 + [Bedrock](https://roots.io/bedrock/) (Composer-managed)
-- PHP 8.4 / Apache / MySQL 8.0 (Docker)
-- Polylang (multilingual), ACF, Yoast SEO, Contact Form 7
-- Custom `developer-theme` — no frameworks, no jQuery
+## What's inside
+
+- **WordPress 6.9 + [Bedrock](https://roots.io/bedrock/)** — Composer-managed, clean folder structure, environment-based config
+- **PHP 8.4 / Apache / MySQL 8.0** — fully Dockerized local dev
+- **Custom `developer-theme`** — zero frameworks, no jQuery, hand-written CSS (~60KB), fully responsive
+- **Polylang** — multilingual out of the box (EN / RU / UK / ES), gracefully degrades to fewer languages
+- **ACF, Yoast SEO, Contact Form 7, WP Mail SMTP** — standard plugin stack, all free, Composer-managed
+- **Portfolio CPT** — custom post type with skill/category taxonomies
 
 ## Quick Start
 
 ### 1. Clone and configure
 
 ```bash
-git clone https://github.com/your-username/bedrock-portfolio-starter.git
+git clone https://github.com/lex127/bedrock-portfolio-starter.git
 cd bedrock-portfolio-starter
 cp .env.example .env
 ```
 
-Edit `.env` — the defaults work for local Docker as-is. Generate unique salts at https://roots.io/salts.html and paste them in.
+The defaults in `.env` work for local Docker as-is. Generate unique salts at https://roots.io/salts.html and paste them in.
 
 ### 2. Start Docker and install
 
@@ -27,27 +31,24 @@ Edit `.env` — the defaults work for local Docker as-is. Generate unique salts 
 make init
 ```
 
-This builds the container, runs `composer install`, and installs WordPress. Takes ~2–3 minutes on first run.
+Builds the container, runs `composer install`, installs WordPress. ~2–3 minutes on first run.
 
 ### 3. Import demo content
 
 ```bash
 make db-import FILE=demo/demo.sql
-```
-
-After import, run a URL search-replace so all links point to your local site:
-
-```bash
 make wp CMD="search-replace 'https://demo.example.com' 'http://localhost:8880' --all-tables"
 ```
 
 ### 4. Open in browser
 
-- **Site:** http://localhost:8880
-- **Admin:** http://localhost:8880/wp/wp-admin
-- **Login:** `admin` / `admin`
+| | |
+|---|---|
+| **Site** | http://localhost:8880 |
+| **Admin** | http://localhost:8880/wp/wp-admin |
+| **Login** | `admin` / `admin` |
 
-### 5. Customize
+### 5. Make it yours
 
 Everything is editable through **WP Admin** — no code changes needed for content:
 
@@ -61,9 +62,7 @@ Everything is editable through **WP Admin** — no code changes needed for conte
 | Blog posts | Posts → Add New |
 | Contact form | Contact → Contact Forms |
 
-## Customizer: all text lives in one place
-
-The theme uses a single PHP config (`web/app/themes/developer-theme/inc/customizer-config.php`) as the source of truth for all default text. If you want to change the defaults permanently (e.g. rename labels, rewrite sections), edit that file — each key is clearly named and grouped by language.
+To change default text permanently (instead of via DB), edit `web/app/themes/developer-theme/inc/customizer-config.php` — every key is named and grouped by template and language.
 
 ## Commands
 
@@ -80,16 +79,24 @@ make composer CMD="require pkg/name"  # Run Composer
 
 ## Languages
 
-The demo content ships with 4 languages: English, Russian, Ukrainian, Spanish. You can add or remove languages in **WP Admin → Languages** (Polylang). To use fewer languages, simply deactivate the ones you don't need — the theme degrades gracefully.
+Ships with 4 languages configured in Polylang. To use fewer, deactivate unwanted languages in **WP Admin → Languages** — the theme degrades gracefully.
 
 ## Deployment
 
-The project is designed for deployment to shared hosting (e.g. Hostinger) or any PHP/MySQL server:
+Designed for shared hosting (e.g. Hostinger) or any PHP/MySQL server:
 
-1. Push code to your server via `git pull`
-2. Run `composer install --no-dev` on the server
-3. Configure a production `.env` with real credentials and `WP_ENV=production`
-4. Import your DB, run WP-CLI search-replace for the production URL
+1. `git pull` on the server
+2. `composer install --no-dev`
+3. Set up production `.env` with real credentials and `WP_ENV=production`
+4. Import DB, run WP-CLI search-replace for your production URL
+
+## Author
+
+Built by **Oleksii Siniaiev** — Senior Full-Stack Engineer (WordPress & Laravel).
+
+- Site: [alexsinyaev.com](https://alexsinyaev.com)
+- GitHub: [github.com/lex127](https://github.com/lex127)
+- LinkedIn: [linkedin.com/in/alexsinyayev](https://www.linkedin.com/in/alexsinyayev/)
 
 ## Credits
 

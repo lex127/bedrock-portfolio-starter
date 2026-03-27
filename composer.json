@@ -1,19 +1,15 @@
 {
-  "name": "your-name/bedrock-portfolio-starter",
+  "name": "lex127/bedrock-portfolio-starter",
   "type": "project",
   "license": "MIT",
-  "description": "WordPress Bedrock portfolio/resume starter — multilingual, Docker-ready, customizable via WP Admin.",
-  "homepage": "https://roots.io/bedrock/",
+  "description": "WordPress Bedrock portfolio/resume starter by Oleksii Siniaiev — multilingual (EN/RU/UK/ES), Docker-ready, customizable via WP Admin.",
+  "homepage": "https://github.com/lex127/bedrock-portfolio-starter",
   "authors": [
     {
-      "name": "Scott Walkinshaw",
-      "email": "scott.walkinshaw@gmail.com",
-      "homepage": "https://github.com/swalkinshaw"
-    },
-    {
-      "name": "Ben Word",
-      "email": "ben@benword.com",
-      "homepage": "https://github.com/retlehs"
+      "name": "Oleksii Siniaiev",
+      "email": "lexsinyaev@gmail.com",
+      "homepage": "https://alexsinyaev.com",
+      "role": "Developer"
     }
   ],
   "keywords": [
