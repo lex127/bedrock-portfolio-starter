@@ -45,6 +45,20 @@ make init
 
 — сервер готов.
 
+### Запуск на Windows без `make`
+
+Если работаешь из PowerShell или CMD и не хочешь ставить `make`, используй прямые команды Docker:
+
+```powershell
+docker compose up -d --build
+docker compose exec app composer install -d /var/www/html
+docker compose exec app wp core install --url=http://localhost:8880 --title="My Portfolio" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
+docker compose exec -T db mysql -u wordpress -pwordpress wordpress < demo\demo.sql
+docker compose exec app wp search-replace "https://demo.example.com" "http://localhost:8880" --all-tables --allow-root
+```
+
+После этого сайт будет доступен по `http://localhost:8880` с тем же демо-контентом, что и у всех остальных.
+
 ## Шаг 4 — Импортировать демо-базу
 
 ```bash
@@ -74,13 +88,13 @@ make wp CMD="search-replace 'https://demo.example.com' 'http://localhost:8880' -
 
 | Что поменять | Где в админке |
 |---|---|
-| Имя, email, соцсети, локация | Appearance → Customize → Shared Settings |
+| Имя, email, соцсети, локация, URL резюме | Appearance → Customize → Shared Settings |
 | Заголовок, подзаголовок, статистика | Appearance → Customize → English / Русский / Українська → Front Page |
 | Услуги (Services) | Appearance → Customize → English / Русский / Українська → Front Page |
 | Процесс работы | Appearance → Customize → English / Русский / Українська → Front Page |
 | Тексты на всех языках | Appearance → Customize → нужная языковая панель |
-| Фото профиля | Медиатека → загрузи фото → Customize → Personal Info → Profile Image |
-| PDF резюме | Медиатека → загрузи PDF → Customize → Personal Info → CV PDF |
+| Фото профиля | Медиатека → загрузи фото → Appearance → Customize → Shared Settings |
+| Кнопка `Download CV` | Загрузи PDF в Медиатеку, скопируй URL файла и вставь в Appearance → Customize → Shared Settings → CV PDF URL |
 
 ### Портфолио
 
@@ -105,6 +119,19 @@ make logs        # Посмотреть логи
 make shell       # Зайти в контейнер (для отладки)
 make db-export   # Экспортировать базу в backups/
 make db-import FILE=demo/demo.sql   # Импортировать tracked демо-базу из репозитория
+```
+
+### Windows-команды без `make`
+
+```powershell
+docker compose up -d
+docker compose down
+docker compose logs -f
+docker compose exec app bash
+docker compose exec -T db mysql -u wordpress -pwordpress wordpress < demo\demo.sql
+docker compose exec db mysqldump -u wordpress -pwordpress wordpress > backups\dump.sql
+docker compose exec app wp plugin list --allow-root
+docker compose exec app composer install -d /var/www/html
 ```
 
 ### Где хранится база

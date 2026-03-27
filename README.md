@@ -4,6 +4,7 @@ A Bedrock-based WordPress portfolio/resume starter with Docker-based local setup
 
 Created by Oleksii Siniaiev as an AI-assisted custom WordPress starter.
 
+> **English:** this file  
 > **На русском:** [docs/setup-ru.md](docs/setup-ru.md)
 
 ## What's inside
@@ -60,10 +61,11 @@ Everything is editable through **WP Admin** — no code changes needed for conte
 
 | What | Where in Admin |
 |------|---------------|
-| Your name, email, social links | Appearance → Customize → Personal Info |
+| Your name, email, social links, CV URL | Appearance → Customize → Shared Settings |
 | Hero headline, services, process | Appearance → Customize → (each section) |
 | All text in all 3 default languages | Appearance → Customize → select language |
-| Profile photo, CV PDF | Media Library → upload, then Customize → Personal Info |
+| Profile photo | Media Library → upload, then Appearance → Customize → Shared Settings |
+| CV button URL | Media Library → upload PDF, copy its file URL, then paste into Appearance → Customize → Shared Settings → CV PDF URL |
 | Portfolio items | Portfolio → Add New |
 | Blog posts | Posts → Add New |
 | Contact form | Contact → Contact Forms |
@@ -135,6 +137,8 @@ docker compose exec db mysqldump -u wordpress -pwordpress wordpress > backups\du
 > # Wait ~10 seconds for the database to initialize, then:
 > docker compose exec app composer install -d /var/www/html
 > docker compose exec app wp core install --url=http://localhost:8880 --title="My Portfolio" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
+> docker compose exec -T db mysql -u wordpress -pwordpress wordpress < demo\demo.sql
+> docker compose exec app wp search-replace "https://demo.example.com" "http://localhost:8880" --all-tables --allow-root
 > ```
 
 ## Languages
