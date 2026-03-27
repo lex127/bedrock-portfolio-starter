@@ -1,0 +1,45 @@
+# Dependencies
+/vendor/
+
+# WordPress core (Composer-installed)
+/web/wp/
+
+# Composer-installed mu-plugins, plugins, themes
+/web/app/mu-plugins/bedrock-disallow-indexing/
+/web/app/plugins/advanced-custom-fields/
+/web/app/plugins/contact-form-7/
+/web/app/plugins/litespeed-cache/
+/web/app/plugins/polylang/
+/web/app/plugins/wp-mail-smtp/
+/web/app/plugins/wordpress-seo/
+/web/app/themes/twentytwentyfive/
+
+# Uploads (media library — not in git)
+/web/app/uploads/
+
+# Local temp and generated language files
+/tmp/
+/web/app/languages/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database backups
+/backups/*.sql
+
+# PHP
+.phpunit.cache/
+
+# Logs
+*.log
