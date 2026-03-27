@@ -1,6 +1,6 @@
-# Инструкция по запуску (для своих)
+# Инструкция по запуску
 
-Этот проект — WordPress-сайт-портфолио на базе Bedrock. Запускается локально через Docker, все тексты меняются через панель администратора — код трогать не нужно.
+Этот проект — WordPress-сайт-портфолио на базе Bedrock. Его можно клонировать, поднять локально через Docker, импортировать демо-базу из репозитория и получить сайт в готовом стартовом состоянии.
 
 ## Что нужно установить заранее
 
@@ -45,13 +45,15 @@ make init
 
 — сервер готов.
 
-## Шаг 4 — Залить демо-контент
+## Шаг 4 — Импортировать демо-базу
 
 ```bash
 make db-import FILE=demo/demo.sql
 ```
 
-После этого скажи WordPress'у, что сайт теперь на `localhost:8880`:
+`demo/demo.sql` — это коммитимая демо-база, которая хранится в Git и должна давать одинаковый стартовый результат у любого, кто клонирует репозиторий.
+
+После импорта скажи WordPress'у, что сайт теперь на `localhost:8880`:
 
 ```bash
 make wp CMD="search-replace 'https://demo.example.com' 'http://localhost:8880' --all-tables"
@@ -72,11 +74,11 @@ make wp CMD="search-replace 'https://demo.example.com' 'http://localhost:8880' -
 
 | Что поменять | Где в админке |
 |---|---|
-| Имя, email, соцсети, локация | Appearance → Customize → Personal Info |
-| Заголовок, подзаголовок, статистика | Appearance → Customize → Hero Section |
-| Услуги (Services) | Appearance → Customize → Services |
-| Процесс работы | Appearance → Customize → Process |
-| Тексты на всех языках | Appearance → Customize → выбери язык вверху |
+| Имя, email, соцсети, локация | Appearance → Customize → Shared Settings |
+| Заголовок, подзаголовок, статистика | Appearance → Customize → English / Русский / Українська → Front Page |
+| Услуги (Services) | Appearance → Customize → English / Русский / Українська → Front Page |
+| Процесс работы | Appearance → Customize → English / Русский / Українська → Front Page |
+| Тексты на всех языках | Appearance → Customize → нужная языковая панель |
 | Фото профиля | Медиатека → загрузи фото → Customize → Personal Info → Profile Image |
 | PDF резюме | Медиатека → загрузи PDF → Customize → Personal Info → CV PDF |
 
@@ -90,7 +92,7 @@ make wp CMD="search-replace 'https://demo.example.com' 'http://localhost:8880' -
 
 ### Языки
 
-Сайт по умолчанию работает на 4 языках: EN, RU, UK, ES. Если нужно меньше — отключи лишние в **Languages → Languages** (там же в админке), тема адаптируется автоматически.
+Сайт по умолчанию работает на 3 языках: EN, RU и UK. Если нужен один язык или другая комбинация — настрой это в **Languages → Languages**.
 
 ---
 
@@ -102,6 +104,20 @@ make down        # Остановить контейнеры
 make logs        # Посмотреть логи
 make shell       # Зайти в контейнер (для отладки)
 make db-export   # Экспортировать базу в backups/
+make db-import FILE=demo/demo.sql   # Импортировать tracked демо-базу из репозитория
+```
+
+### Где хранится база
+
+- `demo/demo.sql` — основная демо-база, которая хранится в Git.
+- `backups/` — локальные экспорты во время разработки. Эти `.sql` не коммитятся.
+
+Если ты обновил демо-контент и хочешь перезаписать коммитимую базу:
+
+```bash
+make db-export
+cp backups/db-YYYYMMDD-HHMMSS.sql demo/demo.sql
+./demo/scrub-db.sh demo/demo.sql > /tmp/demo-scrubbed.sql && mv /tmp/demo-scrubbed.sql demo/demo.sql
 ```
 
 ## Остановить и запустить снова
@@ -120,7 +136,3 @@ make up     # запустить снова (быстро, контейнер у
 **`make: command not found`** на Windows — используй Git Bash или установи `make` через chocolatey: `choco install make`.
 
 **База не импортируется** — убедись что контейнеры запущены (`make up`) перед `make db-import`.
-
----
-
-Вопросы — пиши автору: [alexsinyaev.com](https://alexsinyaev.com) / [github.com/lex127](https://github.com/lex127)

@@ -50,7 +50,7 @@ db-shell:
 # Export database to backups/
 db-export:
 	@mkdir -p backups
-	docker compose exec db mysqldump -u wordpress -pwordpress wordpress > backups/db-$$(date +%Y%m%d-%H%M%S).sql
+	docker compose exec db mysqldump --no-tablespaces -u wordpress -pwordpress wordpress > backups/db-$$(date +%Y%m%d-%H%M%S).sql
 	@echo "Database exported to backups/"
 	@ls -la backups/*.sql | tail -1
 

@@ -6,12 +6,7 @@
 
 # Composer-installed mu-plugins, plugins, themes
 /web/app/mu-plugins/bedrock-disallow-indexing/
-/web/app/plugins/advanced-custom-fields/
-/web/app/plugins/contact-form-7/
-/web/app/plugins/litespeed-cache/
-/web/app/plugins/polylang/
-/web/app/plugins/wp-mail-smtp/
-/web/app/plugins/wordpress-seo/
+/web/app/plugins/
 /web/app/themes/twentytwentyfive/
 
 # Uploads (media library — not in git)
@@ -28,6 +23,7 @@
 # IDE
 .idea/
 .vscode/
+CLAUDE.md
 *.swp
 *.swo
 
@@ -37,9 +33,13 @@ Thumbs.db
 
 # Database backups
 /backups/*.sql
+!/backups/.gitkeep
 
 # PHP
 .phpunit.cache/
 
 # Logs
 *.log
+
+# Local webserver artifacts
+/web/.htaccess

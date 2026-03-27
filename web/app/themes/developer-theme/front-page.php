@@ -9,9 +9,9 @@ $lang = function_exists('pll_current_language') ? pll_current_language('slug') :
 
 $home_url      = function_exists('pll_home_url') ? pll_home_url() : home_url('/');
 $portfolio_url = get_post_type_archive_link('portfolio');
-$contact_page  = get_page_by_path('contact');
-$contact_url   = $contact_page ? get_permalink($contact_page) : $home_url . '#contact';
-$booking_url   = '#contact'; // TODO: Replace with Calendly link
+$contact_url   = developer_theme_page_url('contact', $lang, $home_url . '#contact');
+$booking_url   = $contact_url;
+$cv_url        = trim((string) dt_shared('cv_pdf_url'));
 
 $language_links = [];
 if (function_exists('pll_the_languages')) {
@@ -103,6 +103,11 @@ $header_links = [
 				<div class="home-landing__actions">
 					<a class="home-landing__button home-landing__button--primary" href="<?php echo esc_url($booking_url); ?>"><?php echo esc_html(dt_label('cta_book', 'front')); ?></a>
 					<a class="home-landing__button" href="#services"><?php echo esc_html(dt_label('cta_services', 'front')); ?></a>
+					<?php if ('' !== $cv_url) : ?>
+						<a class="home-landing__button" href="<?php echo esc_url($cv_url); ?>" target="_blank" rel="noopener noreferrer">
+							<?php echo esc_html(dt_label('cta_cv', 'front')); ?>
+						</a>
+					<?php endif; ?>
 				</div>
 				<ul class="home-landing__stats">
 					<li><strong><?php echo esc_html(dt_label('stat1_num', 'front')); ?></strong><span><?php echo esc_html(dt_label('stat1_label', 'front')); ?></span></li>
@@ -111,7 +116,7 @@ $header_links = [
 				</ul>
 			</div>
 			<div class="home-landing__portrait-wrap">
-				<img class="home-landing__portrait" src="<?php echo esc_url(dt_shared('profile_image_url')); ?>" alt="<?php echo esc_attr(dt_label('brand', 'nav')); ?> — WordPress & Laravel Engineer based in Spain" width="430" height="430" loading="eager" />
+				<img class="home-landing__portrait" src="<?php echo esc_url(dt_shared('profile_image_url')); ?>" alt="<?php echo esc_attr(dt_label('brand', 'nav')); ?>" width="430" height="430" loading="eager" />
 				<div class="home-landing__hero-note">
 					<span class="home-landing__hero-note-dot"></span>
 					<div>
@@ -161,9 +166,9 @@ foreach ($problems as $prob) :
 		<div class="home-landing__grid home-landing__grid--services">
 			<?php
             $services = [
-    ['svc1_tag', 'svc1_h3', 'svc1_p', 'svc1_cta'],
-    ['svc2_tag', 'svc2_h3', 'svc2_p', 'svc2_cta'],
-    ['svc3_tag', 'svc3_h3', 'svc3_p', 'svc3_cta'],
+                ['svc1_tag', 'svc1_h3', 'svc1_p', 'svc1_cta'],
+                ['svc2_tag', 'svc2_h3', 'svc2_p', 'svc2_cta'],
+                ['svc3_tag', 'svc3_h3', 'svc3_p', 'svc3_cta'],
             ];
 foreach ($services as $svc) :
     ?>
@@ -331,7 +336,7 @@ foreach ($steps as $step) :
 			</a>
 		</div>
 		<div class="home-landing__contact-actions">
-			<a class="home-landing__button home-landing__button--primary home-landing__button--lg" href="<?php echo esc_url($booking_url); ?>">
+			<a class="home-landing__button home-landing__button--primary home-landing__button--lg" href="<?php echo esc_url($contact_url); ?>">
 				<?php echo esc_html(dt_label('contact_cta_book', 'front')); ?> &rarr;
 			</a>
 			<a class="home-landing__button home-landing__button--lg" href="<?php echo esc_url($contact_url); ?>">
@@ -355,6 +360,7 @@ foreach ($steps as $step) :
 			</nav>
 		</div>
 		<p class="home-landing__copyright"><?php echo wp_kses_post(dt_label('footer_copy', 'nav')); ?></p>
+		<?php echo wp_kses_post(developer_theme_footer_credit()); ?>
 	</footer>
 
 </div>

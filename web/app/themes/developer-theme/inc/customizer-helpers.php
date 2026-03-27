@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Customizer helper functions for retrieving theme text.
  */
@@ -11,35 +12,36 @@
  * @param string $lang  Language slug. Auto-detected if empty.
  * @return string|array
  */
-function dt_label( $key, $group = 'nav', $lang = '' ) {
-	if ( empty( $lang ) ) {
-		$lang = function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : 'en';
-	}
+function dt_label($key, $group = 'nav', $lang = '')
+{
+    if (empty($lang)) {
+        $lang = function_exists('pll_current_language') ? pll_current_language('slug') : 'en';
+    }
 
-	$config = developer_theme_customizer_config();
+    $config = developer_theme_customizer_config();
 
-	if ( 'shared' === $group ) {
-		$mod_key = 'dt_shared_' . $key;
-		$default = $config['shared'][ $key ] ?? '';
-	} elseif ( 'nav' === $group ) {
-		$mod_key = 'dt_' . $lang . '_nav_' . $key;
-		$default = $config['nav'][ $lang ][ $key ] ?? ( $config['nav']['en'][ $key ] ?? '' );
-	} else {
-		$mod_key = 'dt_' . $lang . '_' . $group . '_' . $key;
-		$default = $config['templates'][ $group ][ $lang ][ $key ]
-				?? ( $config['templates'][ $group ]['en'][ $key ] ?? '' );
-	}
+    if ('shared' === $group) {
+        $mod_key = 'dt_shared_' . $key;
+        $default = $config['shared'][ $key ] ?? '';
+    } elseif ('nav' === $group) {
+        $mod_key = 'dt_' . $lang . '_nav_' . $key;
+        $default = $config['nav'][ $lang ][ $key ] ?? ($config['nav']['en'][ $key ] ?? '');
+    } else {
+        $mod_key = 'dt_' . $lang . '_' . $group . '_' . $key;
+        $default = $config['templates'][ $group ][ $lang ][ $key ]
+                ?? ($config['templates'][ $group ]['en'][ $key ] ?? '');
+    }
 
-	if ( is_array( $default ) ) {
-		$raw = get_theme_mod( $mod_key, wp_json_encode( $default, JSON_UNESCAPED_UNICODE ) );
-		if ( is_array( $raw ) ) {
-			return $raw;
-		}
-		$decoded = json_decode( $raw, true );
-		return is_array( $decoded ) ? $decoded : $default;
-	}
+    if (is_array($default)) {
+        $raw = get_theme_mod($mod_key, wp_json_encode($default, JSON_UNESCAPED_UNICODE));
+        if (is_array($raw)) {
+            return $raw;
+        }
+        $decoded = json_decode($raw, true);
+        return is_array($decoded) ? $decoded : $default;
+    }
 
-	return get_theme_mod( $mod_key, $default );
+    return get_theme_mod($mod_key, $default);
 }
 
 /**
@@ -48,6 +50,23 @@ function dt_label( $key, $group = 'nav', $lang = '' ) {
  * @param string $key Setting key.
  * @return string
  */
-function dt_shared( $key ) {
-	return dt_label( $key, 'shared' );
+function dt_shared($key)
+{
+    return dt_label($key, 'shared');
+}
+
+/**
+ * Render a visible theme credit link.
+ *
+ * White-label installs can disable it via DEVELOPER_THEME_SHOW_CREDIT.
+ *
+ * @return string
+ */
+function developer_theme_footer_credit()
+{
+    if (defined('DEVELOPER_THEME_SHOW_CREDIT') && false === DEVELOPER_THEME_SHOW_CREDIT) {
+        return '';
+    }
+
+    return '<p class="theme-credit">Theme by <a href="https://alexsinyaev.com" target="_blank" rel="noopener noreferrer">Oleksii Siniaiev</a></p>';
 }

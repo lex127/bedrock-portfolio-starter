@@ -6,14 +6,13 @@
 
 get_header();
 
-$lang = function_exists('pll_current_language') ? pll_current_language('slug') : 'en';
+$lang = developer_theme_current_language();
 
 $home_url      = function_exists('pll_home_url') ? pll_home_url() : home_url('/');
-$blog_url      = get_permalink(get_option('page_for_posts'));
+$blog_url      = developer_theme_posts_page_url($lang);
 $portfolio_url = get_post_type_archive_link('portfolio');
-$contact_page  = get_page_by_path('contact');
-$contact_url   = $contact_page ? get_permalink($contact_page) : $home_url;
-$booking_url   = '#'; // TODO: Replace with Calendly link
+$contact_url   = developer_theme_page_url('contact', $lang, $home_url);
+$booking_url   = $contact_url;
 
 $language_links = [];
 if (function_exists('pll_the_languages')) {
@@ -166,6 +165,7 @@ foreach ($roles as $role) :
 				<a href="<?php echo esc_url($portfolio_url); ?>"><?php echo esc_html(dt_label('portfolio', 'nav')); ?></a>
 			</nav>
 		</div>
+		<?php echo wp_kses_post(developer_theme_footer_credit()); ?>
 	</footer>
 </div>
 
