@@ -4,6 +4,8 @@ A WordPress portfolio/resume site built and used in production by [Oleksii Sinia
 
 > **Live example:** [alexsinyaev.com](https://alexsinyaev.com) — this starter powers that site.
 
+> **На русском:** [docs/setup-ru.md](docs/setup-ru.md)
+
 ## What's inside
 
 - **WordPress 6.9 + [Bedrock](https://roots.io/bedrock/)** — Composer-managed, clean folder structure, environment-based config
