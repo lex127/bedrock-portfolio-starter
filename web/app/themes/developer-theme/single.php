@@ -218,7 +218,7 @@ $header_links = [
 
 				<section class="post-author-card" aria-labelledby="author-title">
 					<div class="post-author-card__avatar">
-						<?php echo wp_get_attachment_image(626, 'thumbnail', false, [ 'loading' => 'lazy', 'alt' => dt_shared('name') ]); ?>
+						<img src="<?php echo esc_url(dt_shared('profile_image_url')); ?>" alt="<?php echo esc_attr(dt_shared('name')); ?>" width="84" height="84" loading="lazy" />
 					</div>
 					<div class="post-author-card__content">
 						<p class="post-author-card__eyebrow"><?php echo esc_html(dt_label('author_title', 'single')); ?></p>
